@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
 
 export default function InputFields() {
-  const name = useFormInput("Danuja");
-  const surname = useFormInput("Greru");
+  const [name, setName] = useState("Danuja");
+  const [surname, setSurname] = useState("Greru");
 
-  useDocumentTitle(name.value + ' ' + surname.value);
+  function handleNameChange(e) {
+    setName(e.target.value);
+  }
+
+  function handleSurnameChange(e) {
+    setSurname(e.target.value);
+  }
+
+  useEffect(() => {
+      document.title = name + ' ' + surname;
+  }, [name, surname]);
 
   return (
     <div className="flex flex-col space-y-10 max-w-72 pt">
@@ -13,31 +23,15 @@ export default function InputFields() {
         className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         type="text"
         placeholder="input your name"
-        {...name}
+        value={name}
+        onChange={handleNameChange}
       />
       <input
         className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         placeholder="input your surename"
-        {...surname}
+        value={surname}
+        onChange={handleSurnameChange}
       />
     </div>
   );
-}
-
-function useDocumentTitle(title) {
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
-}
-
-function useFormInput(initialValue: string) {
-  const [value, setValue] = useState(initialValue);
-
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
-  return {
-    value,
-    onChange: handleChange,
-  };
 }
