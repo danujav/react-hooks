@@ -1,4 +1,4 @@
-import InputFields from "./InputFields";
+import InputFields from "./customhooks/InputFields";
 
 export default function App() {
   return (
